@@ -1,7 +1,12 @@
 <?php
 /**
- * Plugin Name: Publication Checklist Items
- * Description: Demo for the Publication Checklist feature
+ * Plugin Name: Smeedijzer Internet - Publication Checklist Items
+ * Plugin URI:  https://github.com/smeedijzer-internet/smeedijzer-publication-checklist
+ * Description: Publication Checklist feature
+ * Version:     1.0.0
+ * Author:      Smeedijzer Internet
+ * Author URI:  https://github.com/smeedijzer-internet
+ * Licence:     MIT
  */
 
 namespace Altis\Workflow\ChecklistItems;
