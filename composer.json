@@ -1,5 +1,5 @@
 {
 	"name": "smeedijzer-internet/smeedijzer-publication-checklist",
 	"description": "Default checks for the Publication Checklist plugin.",
-	"type": "wordpress-mu-plugin"
+	"type": "wordpress-muplugin"
 }
