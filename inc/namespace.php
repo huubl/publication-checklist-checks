@@ -46,11 +46,16 @@ function register_featured_image_check() {
         array(
             'type'      => array(
                 'post',
+                'page',
+                'verhalen',
+                'inspiratie',
+                get_post_types([], 'names')
             ),
             'run_check' => function ( array $post, array $meta, array $terms ) : Status {
 
                 if ( ! has_post_thumbnail() ) {
-                    return new Status( Status::INCOMPLETE, __( 'Add a featured image to the post', 'Lf_Mu' ) );
+                    add_filter( 'altis.publication-checklist.block_on_failing', '__return_true' );
+                    return new Status( Status::INCOMPLETE, __( 'Voeg uitgelichte afbeelding toe', 'smdzr' ) );
                 } else {
 
                     $img    = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
@@ -58,25 +63,32 @@ function register_featured_image_check() {
                     $width  = $img[1];
                     $height = $img[2];
 
-                    $required_width  = 1200;
-                    $required_height = 630;
+                    $required_width  = 1100;
+                    $required_height = 800;
 
                     $filetype = wp_check_filetype( wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' )[0] );
-
-                    if ( has_category( 'news' ) ) {
-                        return new Status( Status::COMPLETE, __( 'Add a featured image to the post', 'Lf_Mu' ) );
+    
+                    if ( $width >= $required_width && $height >= $required_height ) {
+                        return new Status( Status::COMPLETE, __( 'Add a featured image of at least 1200x630px', 'Lf_Mu' ) );
                     } else {
-
-                        if ( 'svg' == $filetype['ext'] ) {
-                            return new Status( Status::INCOMPLETE, __( 'Add a featured image that is not an SVG (SVGs only work for "News" posts)', 'Lf_Mu' ) );
-                        } else {
-                            if ( $width >= $required_width && $height >= $required_height ) {
-                                return new Status( Status::COMPLETE, __( 'Add a featured image of at least 1200x630px', 'Lf_Mu' ) );
-                            } else {
-                                return new Status( Status::INCOMPLETE, __( 'Add a featured image of at least 1200x630px', 'Lf_Mu' ) );
-                            }
-                        }
+                        add_filter( 'altis.publication-checklist.block_on_failing', '__return_true' );
+                        return new Status( Status::INCOMPLETE, __( 'Uitgelichte afbeelding moet minimaal', 'Lf_Mu' ) );
                     }
+                 
+//                    if ( has_category( 'news' ) ) {
+//                        return new Status( Status::COMPLETE, __( 'Add a featured image to the post', 'Lf_Mu' ) );
+//                    } else {
+//
+//                        if ( 'svg' == $filetype['ext'] ) {
+//                            return new Status( Status::INCOMPLETE, __( 'Add a featured image that is not an SVG (SVGs only work for "News" posts)', 'Lf_Mu' ) );
+//                        } else {
+//                            if ( $width >= $required_width && $height >= $required_height ) {
+//                                return new Status( Status::COMPLETE, __( 'Add a featured image of at least 1200x630px', 'Lf_Mu' ) );
+//                            } else {
+//                                return new Status( Status::INCOMPLETE, __( 'Add a featured image of at least 1200x630px', 'Lf_Mu' ) );
+//                            }
+//                        }
+//                    }
                 }
 
                 return new Status( Status::INCOMPLETE, __( 'Add a featured image to begin checks', 'Lf_Mu' ) );
