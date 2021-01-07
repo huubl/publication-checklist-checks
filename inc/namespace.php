@@ -54,7 +54,7 @@ function register_featured_image_check() {
             'run_check' => function ( array $post, array $meta, array $terms ) : Status {
 
                 if ( ! has_post_thumbnail() ) {
-                    add_filter( 'altis.publication-checklist.block_on_failing', '__return_true' );
+                    //add_filter( 'altis.publication-checklist.block_on_failing', '__return_true' );
                     return new Status( Status::INCOMPLETE, __( 'Voeg uitgelichte afbeelding toe', 'smdzr' ) );
                 } else {
 
@@ -67,14 +67,14 @@ function register_featured_image_check() {
                     $required_height = 800;
 
                     $filetype = wp_check_filetype( wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' )[0] );
-    
+
                     if ( $width >= $required_width && $height >= $required_height ) {
                         return new Status( Status::COMPLETE, __( 'Add a featured image of at least 1200x630px', 'Lf_Mu' ) );
                     } else {
-                        add_filter( 'altis.publication-checklist.block_on_failing', '__return_true' );
+                        //add_filter( 'altis.publication-checklist.block_on_failing', '__return_true' );
                         return new Status( Status::INCOMPLETE, __( 'Uitgelichte afbeelding moet minimaal', 'Lf_Mu' ) );
                     }
-                 
+
 //                    if ( has_category( 'news' ) ) {
 //                        return new Status( Status::COMPLETE, __( 'Add a featured image to the post', 'Lf_Mu' ) );
 //                    } else {
